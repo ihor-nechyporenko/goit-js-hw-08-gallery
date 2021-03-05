@@ -1,20 +1,21 @@
 import galleryImages from './gallery-items.js';
 
-
-const galleryRef = document.querySelector('.js-gallery');
-const ligthboxRef = document.querySelector('.lightbox');
-const lightboxImageRef = document.querySelector('.lightbox__image');
-const closeBtn = document.querySelector('[data-action="close-lightbox"]');
-const backdropRef = document.querySelector('.lightbox__overlay');
+const refs = {
+    gallery: document.querySelector('.js-gallery'),
+    ligthbox: document.querySelector('.lightbox'),
+    image: document.querySelector('.lightbox__image'),
+    backdrop: document.querySelector('.lightbox__overlay'),
+    closeBtn: document.querySelector('[data-action="close-lightbox"]'),
+}
 
 const galleryCardsMurkup = makeCardsGallery(galleryImages);
-galleryRef.insertAdjacentHTML('afterbegin', galleryCardsMurkup);
+refs.gallery.insertAdjacentHTML('afterbegin', galleryCardsMurkup);
 
-galleryRef.addEventListener('click', onImageClick);
+refs.gallery.addEventListener('click', onImageClick);
 
-closeBtn.addEventListener('click', onCloseModal);
+refs.closeBtn.addEventListener('click', onCloseModal);
 
-backdropRef.addEventListener('click', onBackdropClick);
+refs.backdrop.addEventListener('click', onBackdropClick);
 
 const arrayOfImageLinks = makeArrayOfImageLinks(galleryImages);
 const arrayOfImageDescriptions = makeArrayOfImageDescriptions(galleryImages);
@@ -27,7 +28,7 @@ function makeArrayOfImageDescriptions(gallery) {
     return gallery.map(({ description }) => description);
 }
 
-function makeCardsGallery (gallery) {
+function makeCardsGallery(gallery) {
     return gallery.map(({ preview, original, description }) => {
         return `
         <li class="gallery__item">
@@ -67,9 +68,9 @@ function onOpenModal(url, description) {
     window.addEventListener('keydown', onArrowRightKeyPress);
     window.addEventListener('keydown', onArrowLeftKeyPress);
 
-    ligthboxRef.classList.add('is-open');
-    lightboxImageRef.setAttribute("src", url);
-    lightboxImageRef.setAttribute("alt", description);
+    refs.ligthbox.classList.add('is-open');
+
+    setSrcAltAttributes(url, description);
 
     position = arrayOfImageLinks.indexOf(url);
 
@@ -80,8 +81,7 @@ function onArrowRightKeyPress(event) {
     if (event.code === 'ArrowRight') {
         position < arrayOfImageLinks.length - 1 ? position += 1 : position = 0;
 
-        lightboxImageRef.setAttribute("src", arrayOfImageLinks[position]);
-        lightboxImageRef.setAttribute("alt", arrayOfImageDescriptions[position]);
+        setSrcAltAttributes(arrayOfImageLinks[position], arrayOfImageDescriptions[position]);
     }
 }
 
@@ -89,9 +89,13 @@ function onArrowLeftKeyPress(event) {
     if (event.code === 'ArrowLeft') {
         position > 0 ? position -= 1 : position = arrayOfImageLinks.length - 1;
 
-        lightboxImageRef.setAttribute("src", arrayOfImageLinks[position]);
-        lightboxImageRef.setAttribute("alt", arrayOfImageDescriptions[position]);
+        setSrcAltAttributes(arrayOfImageLinks[position], arrayOfImageDescriptions[position]);
     }
+}
+
+function setSrcAltAttributes(src, alt) {
+    refs.image.setAttribute("src", src);
+    refs.image.setAttribute("alt", alt);
 }
 
 function onCloseModal() {
@@ -99,9 +103,9 @@ function onCloseModal() {
     window.removeEventListener('keydown', onArrowRightKeyPress);
     window.removeEventListener('keydown', onArrowLeftKeyPress);
 
-    ligthboxRef.classList.remove('is-open');
-    lightboxImageRef.removeAttribute("src");
-    lightboxImageRef.removeAttribute("alt");
+    refs.ligthbox.classList.remove('is-open');
+    refs.image.removeAttribute("src");
+    refs.image.removeAttribute("alt");
 }
 
 function onBackdropClick(event) {
