@@ -78,7 +78,7 @@ function onOpenModal(url, description) {
 
 function onArrowRightKeyPress(event) {
     if (event.code === 'ArrowRight') {
-        position < 8 ? position += 1 : position = 0;
+        position < arrayOfImageLinks.length - 1 ? position += 1 : position = 0;
 
         lightboxImageRef.setAttribute("src", arrayOfImageLinks[position]);
         lightboxImageRef.setAttribute("alt", arrayOfImageDescriptions[position]);
@@ -87,7 +87,7 @@ function onArrowRightKeyPress(event) {
 
 function onArrowLeftKeyPress(event) {
     if (event.code === 'ArrowLeft') {
-        position > 0 ? position -= 1 : position = 8;
+        position > 0 ? position -= 1 : position = arrayOfImageLinks.length - 1;
 
         lightboxImageRef.setAttribute("src", arrayOfImageLinks[position]);
         lightboxImageRef.setAttribute("alt", arrayOfImageDescriptions[position]);
