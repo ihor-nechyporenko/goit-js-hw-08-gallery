@@ -1,15 +1,9 @@
 import galleryImages from './gallery-items.js';
+import refs from './refs.js';
+import makeCardsGalleryMarkup from './make-cards-gallery-markup.js';
 
-const refs = {
-    gallery: document.querySelector('.js-gallery'),
-    ligthbox: document.querySelector('.lightbox'),
-    image: document.querySelector('.lightbox__image'),
-    backdrop: document.querySelector('.lightbox__overlay'),
-    closeBtn: document.querySelector('[data-action="close-lightbox"]'),
-}
-
-const galleryCardsMurkup = makeCardsGallery(galleryImages);
-refs.gallery.insertAdjacentHTML('afterbegin', galleryCardsMurkup);
+const galleryCardsMarkup = makeCardsGalleryMarkup(galleryImages);
+refs.gallery.insertAdjacentHTML('afterbegin', galleryCardsMarkup);
 
 refs.gallery.addEventListener('click', onImageClick);
 
@@ -26,26 +20,6 @@ function makeArrayOfImageLinks(gallery) {
 
 function makeArrayOfImageDescriptions(gallery) {
     return gallery.map(({ description }) => description);
-}
-
-function makeCardsGallery(gallery) {
-    return gallery.map(({ preview, original, description }) => {
-        return `
-        <li class="gallery__item">
-            <a
-                class="gallery__link"
-                href="${original}"
-            >
-                <img
-                    class="gallery__image"
-                    src="${preview}"
-                    data-source="${original}"
-                    alt="${description}"
-                />
-            </a>
-        </li>
-        `
-    }).join('');
 }
 
 function onImageClick(event) {
