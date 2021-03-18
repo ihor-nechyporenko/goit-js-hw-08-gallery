@@ -1,6 +1,6 @@
-import galleryImages from './gallery-items.js';
-import refs from './refs.js';
-import makeCardsGalleryMarkup from './make-cards-gallery-markup.js';
+import galleryImages from './js/gallery-items';
+import refs from './js/refs.js';
+import makeCardsGalleryMarkup from './js/make-cards-gallery-markup.js';
 
 const galleryCardsMarkup = makeCardsGalleryMarkup(galleryImages);
 refs.gallery.insertAdjacentHTML('afterbegin', galleryCardsMarkup);
